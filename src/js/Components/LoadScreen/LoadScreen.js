@@ -1,10 +1,21 @@
-import React from 'react'
+import React from 'react';
+
+import Lottie from 'react-lottie-player';
+
+import animation from "./download-animation.json"
 
 const LoadScreen = () => {
   return (
-    <dialog showModal={true}>
-            <div>LoadScreen</div>
-    </dialog>
+    <div className="container">
+    <div className="form">
+    <Lottie
+      loop
+      animationData={animation}
+      play
+      style={{ width: 150, height: 150 }}
+    />
+    </div>
+    </div>
   )
 }
 

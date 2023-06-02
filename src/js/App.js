@@ -321,7 +321,7 @@ function App() {
     <AppContext.Provider value={[state,dispatch]}>
           <div className="App" tabIndex={0} onKeyDown={(e) => handleKeyPress(e)}>
       {isShow && <Modal onClose={onClose} handleTrim={handleTrim} start={state.markInTime} end={state.markOutTime} videoMeta={videoMeta}/>}
-      <LoadScreen />
+      {/* <LoadScreen /> */}
       <SkeletonTheme baseColor="#E3E0F3" highlightColor="#FAF8FF">
         <Header />
         <div id="main">
