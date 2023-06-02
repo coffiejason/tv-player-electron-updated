@@ -37,30 +37,39 @@ ipcMain.on('notify', (_,message)=>{
 ipcMain.on('download-video', async (event, payload) => {
     console.log('download began ', event, payload);
     payload = JSON.parse(payload);
-    try {
-      const response = await axios.get(payload.url, { responseType: 'stream' });
-      let seg = String(payload.url).split("/");
-      const videoName = String(seg[seg.length - 1]);
-      const downloadsPath = app.getPath('downloads');
-      const tvPlayerFolderPath = path.join(downloadsPath, 'TV-PLAYER');
-  
-      // Create "TV-PLAYER" folder if it doesn't exist
-      if (!fs.existsSync(tvPlayerFolderPath)) {
-        fs.mkdirSync(tvPlayerFolderPath);
+    let seg = String(payload.url).split("/");
+    const videoName = String(seg[seg.length - 1]);
+
+    const downloadsPath = app.getPath('downloads');
+    const tvPlayerFolderPath = path.join(downloadsPath, 'TV-PLAYER');
+
+    if (!fs.existsSync(tvPlayerFolderPath)) {
+      fs.mkdirSync(tvPlayerFolderPath);
+    }
+
+    const vPath = path.join(tvPlayerFolderPath, videoName);
+
+    if(!fs.existsSync(vPath)){ // check of file in question has a download complete status in the log file
+
+      try {
+        const response = await axios.get(payload.url, { responseType: 'stream' });
+    
+        const videoPath = path.join(tvPlayerFolderPath, videoName);
+        const videoWriter = fs.createWriteStream(videoPath);
+    
+        response.data.pipe(videoWriter);
+    
+        videoWriter.on('finish', () => {
+          event.reply('download-complete', videoPath); //write to a file on download complete
+          console.log('download-complete');
+        });
+      } catch (error) {
+        event.reply('download-error', error.message);
+        console.log('download-error', error.message);
       }
-  
-      const videoPath = path.join(tvPlayerFolderPath, videoName);
-      const videoWriter = fs.createWriteStream(videoPath);
-  
-      response.data.pipe(videoWriter);
-  
-      videoWriter.on('finish', () => {
-        event.reply('download-complete', videoPath);
-        console.log('download-complete');
-      });
-    } catch (error) {
-      event.reply('download-error', error.message);
-      console.log('download-error', error.message);
+    }
+    else{
+      event.reply('download-complete', vPath);
     }
   });
 

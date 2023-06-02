@@ -7,3 +7,4 @@ export { default as Modal } from "./Modal/Modal";
 export { default as ImageSkeleton } from "./ImageSkeleton/ImageSkeleton";
 export { default as Options } from "./Options/Options";
 export { default as Logo } from "./Logo/Logo";
+export {default as LoadScreen } from "./LoadScreen/LoadScreen";
