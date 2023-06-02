@@ -34,27 +34,35 @@ ipcMain.on('notify', (_,message)=>{
     new Notification({title: 'Notification', body: message}).show();
 })
 
-ipcMain.on('download-video', async (event,payload) => {
-    console.log('download began ',event,payload);
+ipcMain.on('download-video', async (event, payload) => {
+    console.log('download began ', event, payload);
     payload = JSON.parse(payload);
     try {
       const response = await axios.get(payload.url, { responseType: 'stream' });
-      let seg = String(payload.url).split("/")
+      let seg = String(payload.url).split("/");
       const videoName = String(seg[seg.length - 1]);
-      const videoPath = path.join(app.getPath('downloads'), videoName);
+      const downloadsPath = app.getPath('downloads');
+      const tvPlayerFolderPath = path.join(downloadsPath, 'TV-PLAYER');
+  
+      // Create "TV-PLAYER" folder if it doesn't exist
+      if (!fs.existsSync(tvPlayerFolderPath)) {
+        fs.mkdirSync(tvPlayerFolderPath);
+      }
+  
+      const videoPath = path.join(tvPlayerFolderPath, videoName);
       const videoWriter = fs.createWriteStream(videoPath);
   
       response.data.pipe(videoWriter);
   
       videoWriter.on('finish', () => {
         event.reply('download-complete', videoPath);
-        console.log('download-complete')
+        console.log('download-complete');
       });
     } catch (error) {
       event.reply('download-error', error.message);
-      console.log('download-error', error.message)
+      console.log('download-error', error.message);
     }
-});
+  });
 
 
 app.commandLine.appendSwitch('enable-features','SharedArrayBuffer')
