@@ -1,0 +1,13 @@
+p span {
+    color: red;
+    font-weight: 500;
+}
+
+.logo sup {
+    font-size: small;
+    margin-left: 15px;
+}
+
+.logo sup span{
+    color: gray;
+}

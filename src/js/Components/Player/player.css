@@ -1,0 +1,14 @@
+.controls .player-text {
+    color: white;
+    font-size: medium;
+    margin-top: 15px;
+}
+
+.video-duration {
+    margin-right: 25px;
+    margin-left: auto;
+}
+
+.video-name {
+    margin-left: 25px;
+}
