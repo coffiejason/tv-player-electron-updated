@@ -79,27 +79,27 @@ function App() {
     console.log("videooo",file.name); 
     setVideoName(file.name)
 
-    //setVideoUrl(url);
+    setVideoUrl(url);
 
 
     /* UNCOMMENT BELOW */
     //code to download video 
-    try {
-      electron.send('download-video',JSON.stringify({"event":"event", "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}));
-    } catch (error) {
-      alert("An error occurred during download")
-    }
+    // try {
+    //   electron.send('download-video',JSON.stringify({"event":"event", "url": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"}));
+    // } catch (error) {
+    //   alert("An error occurred during download")
+    // }
   };
 
   /* UNCOMMENT BELOW */
   //sets listener for a download complete event
-  useEffect(() => {
-    electron && electron.receive('download-complete', (event, path) => {
+  // useEffect(() => {
+  //   electron && electron.receive('download-complete', (event, path) => {
 
-      //console.log(path)
-      setVideoUrl(path);
-    });
-  }, []);
+  //     //console.log(path)
+  //     setVideoUrl(path);
+  //   });
+  // }, []);
 
 
 

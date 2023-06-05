@@ -8,12 +8,16 @@ const LoadScreen = () => {
   return (
     <div className="container">
     <div className="form">
-    <Lottie
+      <div className='loadingAnimation'>
+      <Lottie
       loop
+      direction={1}
       animationData={animation}
       play
-      style={{ width: 150, height: 150 }}
+      style={{ width: 300, height: 150}}
     />
+      </div>
+
     </div>
     </div>
   )

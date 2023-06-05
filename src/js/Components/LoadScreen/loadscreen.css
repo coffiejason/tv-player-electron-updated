@@ -42,11 +42,11 @@
 
 .container .form {
     padding: 50px;
-    margin: 10vh 20vw auto 20vw;
+    /* margin: 10vh 20vw auto 20vw; */
     border-radius: 5pt;
     width: 60vw;
     background: #fff;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+    opacity: 0.6;
 
 }
-

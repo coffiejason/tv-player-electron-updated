@@ -43,11 +43,11 @@ const RangeInput = ({
               left: `${rStart}%`,
             }}
             data-start={helpers.toTimeString(
-              (rStart / RANGE_MAX) * videoMeta.duration,
+              ((rStart | 0) / RANGE_MAX) * videoMeta.duration,
               false
             )}
             data-end={helpers.toTimeString(
-              (rEnd / RANGE_MAX) * videoMeta.duration,
+              ((rEnd | 15) / RANGE_MAX) * videoMeta.duration,
               false
             )}
           >
