@@ -273,6 +273,15 @@ function App() {
     setIsPlaying(!isPlaying);
   };
 
+  let throttleTimeout;
+
+  const updateTime = (type) => {
+    clearTimeout(throttleTimeout)
+    throttleTimeout = setTimeout(() => {
+      dispatch({type: type})
+    }, 10)
+  }
+
   const handleKeyPress = (e) => {
     if(videoUrl){
       switch (e.key) {
@@ -297,11 +306,11 @@ function App() {
           return;
   
           case "ArrowRight":
-            dispatch({type: "forwardVideo"})
+            updateTime("forwardVideo")
             return;
             
           case "ArrowLeft":
-            dispatch({type: "reverseVideo"})
+            updateTime("reverseVideo");
             return;
     
           case "ArrowUp":

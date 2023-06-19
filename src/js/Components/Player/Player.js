@@ -105,6 +105,16 @@ const Player = ({
     setCurrTime(e.target.currentTime)
   };
 
+  const handleContextMenu = (event) => {
+    event.preventDefault(); // Prevent the default behavior of the context menu event
+  };
+
+  const handleError = (e) => {
+    console.log(e);
+    console.log(videoRef.current.currTime)
+    videoRef.current.play();
+  }
+
   return (
     <>
       <article>
@@ -129,6 +139,8 @@ const Player = ({
             type="video/mp4"
             src={video}
             onLoadedMetadata={passMetaData}
+            onError={handleError}
+            onContextMenu={handleContextMenu}
           ></video>
           <div className="controls">
             <div className="red-bar">
