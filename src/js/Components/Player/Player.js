@@ -83,7 +83,11 @@ const Player = ({
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play()
+        .then((value)=>{
+          console.log('playing',value)
+        })
+        .catch(error => console.log('could not play',error))
       }
       playPause;
     }
@@ -111,8 +115,30 @@ const Player = ({
 
   const handleError = (e) => {
     console.log(e);
-    console.log(videoRef.current.currTime)
-    videoRef.current.play();
+    console.log(videoRef.current.currentTime)
+    videoRef.current.currentTime += 10;
+
+    console.log(videoRef.current)
+    const playPromise = videoRef.current.play();
+
+    // if(videoRef.current.currentTime > 0){
+    //   videoRef.current.load();
+    // }
+
+    
+
+    if (playPromise !== undefined) {
+      playPromise.then(_ => {
+        // Automatic playback started!
+        // Show playing UI.
+        console.log('playing')
+      })
+      .catch(error => {
+        // Auto-play was prevented
+        // Show paused UI.
+        console.log(error)
+      });
+    }
   }
 
   return (
@@ -135,13 +161,16 @@ const Player = ({
             className="video"
             //onProgress={handleProgress}
             onTimeUpdate={handleProgress}
-            crossorigin="anonymous"
             type="video/mp4"
             src={video}
             onLoadedMetadata={passMetaData}
             onError={handleError}
             onContextMenu={handleContextMenu}
-          ></video>
+          >
+            <source src={video}
+            type="video/mp4"
+             />
+          </video>
           <div className="controls">
             <div className="red-bar">
               <div style={{ width: progress + "%" }} className="red"></div>
